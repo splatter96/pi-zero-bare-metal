@@ -6,9 +6,9 @@
 #include "ascii.h"
 
 /* the current x and y offset, in pixels, from (0, 0) */
-static uint32_t x_offset = 0;
-static uint32_t y_offset = 0;
-
+// static uint32_t x_offset = 0;
+// static uint32_t y_offset = 0;
+//
 /* terminal font included as binary defined in assembly */
 extern int __terminal_font__;
 static uint8_t * terminalFont = (uint8_t *) &__terminal_font__;
@@ -28,6 +28,9 @@ void renderString (fb_info_t * fbInfo, char * string)
 {
   char * c = string;
 
+  uint32_t x_offset = 0;
+  uint32_t y_offset = 0;
+
   while (*c != '\0') {
     /* move to the next line if there's no room for the char */
     if ((x_offset + CHAR_WIDTH) > fbInfo->width) {
@@ -42,6 +45,8 @@ void renderString (fb_info_t * fbInfo, char * string)
       for (uint32_t col = 0; col < CHAR_WIDTH; col++) {
         if (charBitmapRow & 0x1) {
           fbPutPixel(fbInfo, col + x_offset, row + y_offset, FOREGROUND_COLOR);  
+        } else{
+          fbPutPixel(fbInfo, col + x_offset, row + y_offset, BACKGROUND_COLOR);  
         }
         charBitmapRow >>= 1;
       }

@@ -12,6 +12,7 @@ static const uint8_t  CHAR_HEIGHT       = 16;
 static const uint8_t  CHAR_VERT_SEP     = 8;
 static const uint8_t  CHAR_HORIZ_SEP    = 8;
 static const uint32_t FOREGROUND_COLOR  = 0xFFFFFFFF;
+static const uint32_t BACKGROUND_COLOR  = 0x00000000;
 
 void renderString(fb_info_t * fbInfo, char * string);
 

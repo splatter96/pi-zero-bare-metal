@@ -1,8 +1,11 @@
 cc=arm-none-eabi
+#cc=/home/paul/Downloads/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi
 lscript=linker.ld
 
 cflags=-mfpu=vfp -c -mcpu=arm1176jzf-s -nostartfiles -Wall
-lflags=-nostartfiles -T ${lscript}
+#lflags=-nostartfiles -T ${lscript}
+#lflags= -T ${lscript} -L /usr/lib/gcc/arm-none-eabi/9.2.1
+lflags= -T ${lscript} -L /usr/lib/gcc/arm-none-eabi/9.2.1 -nostartfiles
 
 dist_dir=dist/
 build_dir=build/
@@ -17,7 +20,8 @@ kernel=${dist_dir}kernel.img
 all: ${kernel}
 
 ${kernel}: ${asm_objs} ${c_objs}
-	${cc}-ld ${lflags} ${asm_objs} ${c_objs} -o ${build_dir}kernel.elf
+	#${cc}-ld ${lflags}  ${asm_objs} ${c_objs} -lgcc -o ${build_dir}kernel.elf
+	${cc}-gcc ${lflags}  ${asm_objs} ${c_objs} -lgcc -o ${build_dir}kernel.elf
 	${cc}-objcopy ${build_dir}kernel.elf -O binary ${dist_dir}kernel.img
 
 ${c_objs}: ${build_dir}%.o:${src_dir}%.c
